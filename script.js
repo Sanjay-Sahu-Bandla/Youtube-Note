@@ -10,7 +10,7 @@ if (localStorage.getItem("user_auth_key") === null) {
 	var href = window.location.pathname.split('/').pop();
 
 	if(href == 'login.html') {
-		// window.location = '';
+		// window.location = 'popup.html';
 	}
 	else if(href == 'signup.html') {
 		// window.location = '';	
@@ -28,7 +28,7 @@ window.onload = function() {
 
 	var user_auth_key = localStorage.getItem('user_auth_key');
 
-	var file = "https://sanjaysahubandla.000webhostapp.com/Projects/extension/users/"+user_auth_key+".json";
+	var file = "http://localhost/Youtube%20Note/users/"+user_auth_key+".json";
 	var rawFile = new XMLHttpRequest();
 	rawFile.open("POST", file, false);
 	rawFile.onreadystatechange = function ()
@@ -59,6 +59,14 @@ window.onload = function() {
                 	card_title.innerHTML = value[i]['channel_name'];
                 	card_body.appendChild(card_title);
 
+                	var icon = document.createElement('div');
+                	icon.setAttribute("class", "float-right");
+                	var link = "some";
+                	var v_l = value[i]['video_link'];
+                	// alert(v_l);
+                	icon.innerHTML = '<a href="'+v_l+'"><i class="far fa-play-circle" style="font-size:20px;"></i></a>';
+                	card_body.appendChild(icon);
+
                 	var card_text = document.createElement('div');
                 	card_text.setAttribute("class", "card-text");
                 	card_text.innerHTML = value[i]['video_title'];
@@ -70,6 +78,14 @@ window.onload = function() {
 
                 	card_body.appendChild(small);
                 	small.appendChild(cite);
+
+                	var hr = document.createElement('hr');
+                	small.appendChild(hr);
+
+                	var note = document.createElement('div');
+                	note.setAttribute("class", "card-text");
+                	note.innerHTML = "<b>NOTE </b>:"+value[i]['note'];
+                	card_body.appendChild(note);
 
                 	// document.getElementById('channel_name').innerHTML = value[i]['channel_name'];
                 	// document.getElementById('video_title').innerHTML = value[i]['video_title'];
@@ -88,7 +104,7 @@ document.getElementById('login_form').addEventListener('submit', function(evt){
 
 	evt.preventDefault();
 	
-	var dir = 'https://sanjaysahubandla.000webhostapp.com/Projects/extension/add_user.php';
+	var dir = 'http://localhost/Youtube%20Note/add_user.php';
 	var request = new XMLHttpRequest();
 
 	var login_username = document.getElementById("login_username").value;
@@ -153,7 +169,7 @@ document.getElementById('signup_form').addEventListener('submit', function(e){
 	// document.getElementById('username').style.display = 'none';
 	// document.getElementById('password').style.display = 'none';
 
-	var dir = 'https://sanjaysahubandla.000webhostapp.com/Projects/extension/add_user.php';
+	var dir = 'http://localhost/Youtube%20Note/add_user.php';
 	var request = new XMLHttpRequest();
 
 	var id = document.getElementById("user_auth_key").value = Date.now();
