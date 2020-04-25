@@ -23,6 +23,8 @@
   ],
   "permissions":[
     "storage",
+    "contextMenus",
+    "background",
     "activeTab",
     "webNavigation",
     "*://*/*",

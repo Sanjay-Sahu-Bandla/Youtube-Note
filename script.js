@@ -4,6 +4,8 @@
 // alert(window.location.pathname.split('/').pop());
 
 // alert('script:'+window.localStorage.getItem('user_auth_key'));
+// var websiteVar = "hello";
+// chrome.runtime.sendMessage({ website: websiteVar, message:"Go_To_Clicked"});
 
 if (localStorage.getItem("user_auth_key") === null) {
 
@@ -61,11 +63,30 @@ window.onload = function() {
 
                 	var icon = document.createElement('div');
                 	icon.setAttribute("class", "float-right");
-                	var link = "some";
-                	var v_l = value[i]['video_link'];
-                	// alert(v_l);
-                	icon.innerHTML = '<a href="'+v_l+'"><i class="far fa-play-circle" style="font-size:20px;"></i></a>';
                 	card_body.appendChild(icon);
+                	// var path_link = window.location.href;
+                	icon.innerHTML = "<a href='"+value[i]['video_link']+"'><i class='far fa-play-circle' style='font-size:20px;'></i></a>";
+                	
+                	var location = value[i]['video_link'];
+                	// alert(location);
+                	var links = document.getElementsByTagName("a");
+
+                	for (var j = 0; j < links.length; j++) {
+                		(function () {
+                			var ln = links[j];
+                			var location = ln.href;
+               				// var start_time = location.split('=').pop();
+                			ln.onclick = function () {
+
+
+                				chrome.extension.sendMessage({command:"start",url_path:location});
+                				
+                				// // alert(location);
+                				// chrome.tabs.update({active: true, url: location});
+                				// // chrome.tabs.create({active: true, url: location});
+                			};
+                		})();
+                	}
 
                 	var card_text = document.createElement('div');
                 	card_text.setAttribute("class", "card-text");

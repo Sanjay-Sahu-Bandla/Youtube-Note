@@ -1,23 +1,41 @@
-// alert(window.localStorage.removeItem('user_auth_key'));
-// chrome.storage.sync.remove('value', function(Items) {
-//         alert("removed");
-// });
-
-// alert(2);
-
-// swal("Hello world!");
-
-// swal("Hello world!");
-
 chrome.storage.sync.get(['value'], function(result) {
 
 	if(result.value != null) {
 
 		setTimeout(myFunction, 1000);
+
 	}
 });
 
+window.onload = function() {
+
+
+}
+
 function myFunction() {
+
+	chrome.extension.onMessage.addListener(function(request,sender,sendResponse) {
+
+		if(request.command == "start") {
+
+			alert(request.url_path);
+
+			var note_time = request.url_path.split('=').pop();
+
+			// Unable to get current time of the video //
+
+			/* var ytplayer = $("video")[0];
+
+			ytplayer.currentTime = 7;
+			alert(ytplayer.currentTime); */
+
+		}
+		else {
+			alert('Something went wrong !');
+		}
+
+	});
+
 
 	$('.ytd-subscribe-button-renderer').first().before('<button id="start_note" style=" border:none; outline:none;  border-radius: 10px;  background: #449d44;  color:#fff; padding:5px 20px;  box-shadow: 2px 2px 5px #f0f0f0; cursor: pointer">START NOTING</button>');
 
@@ -56,11 +74,13 @@ function myFunction() {
 			var user_auth_key = result.value;
 			var note;
 
-			var video_link = (window.location.href)+'&t='+seconds;
+			var href = window.location.href.split('&')[0];
+
+			var video_link = href+'&t='+seconds;
 
 			video_link = video_link.replace('&', '%26');
 
-alert(video_link);
+			// alert(video_link);
 
 			swal("Note something here:", {
 				content: "input",
